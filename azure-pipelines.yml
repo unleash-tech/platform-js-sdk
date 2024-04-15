@@ -1,0 +1,71 @@
+trigger:
+  - master
+  - dev
+
+pool: vmssagentpool
+
+variables:
+  - name: UNLEASH_ENV
+    value: prod
+
+steps:
+  - task: gitversion/setup@0
+    inputs:
+      versionSpec: '5.x'
+
+  - task: gitversion/execute@0
+    inputs:
+      useConfigFile: true
+      configFilePath: 'GitVersion.yml'
+
+  - script: |
+      sudo mkdir -p /opt/hostedtoolcache/node/16.10.0/x64
+      sudo chown -R $USER /opt/hostedtoolcache/node/16.10.0
+    displayName: 'Node tool setup'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.10.0'
+
+  - task: npmAuthenticate@0
+    inputs:
+      workingFile: '.npmrc'
+
+  - task: Npm@1
+    displayName: NPM Ci
+    inputs:
+      command: custom
+      customCommand: ci
+
+  - task: Npm@1
+    displayName: NPM Build
+    inputs:
+      command: custom
+      customCommand: run build
+
+  - task: Npm@1
+    displayName: NPM Version
+    inputs:
+      command: custom
+      customCommand: --no-git-tag-version version $(GitVersion.SemVer)
+
+  - task: Npm@1
+    displayName: NPM Publish
+    inputs:
+      command: publish
+      publishRegistry: useFeed
+      publishFeed: unleash
+
+  - task: GitHubRelease@0
+    condition: eq(variables['build.sourceBranch'], 'refs/heads/master')
+    displayName: Create GitHub Release
+    inputs:
+      gitHubConnection: 'github-chaseappio'
+      repositoryName: '$(Build.Repository.Name)'
+      action: 'create'
+      target: '$(Build.SourceVersion)'
+      tagSource: 'manual'
+      title: '$(Build.DefinitionName) v$(Build.BuildNumber)'
+      addChangeLog: false
+      tag: v$(Build.BuildNumber)
+      isPreRelease: false
