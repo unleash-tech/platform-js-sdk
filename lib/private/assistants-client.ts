@@ -12,6 +12,12 @@ export class AssistantsClientImp implements AssistantsClient {
 
     withId(id:string) : AssistantClient
     {
+        if ( !id ) throw new Error('asssitant id argument is required');
         return new AssistantClientImp(this.http,id);
+    }
+
+    get default() : AssistantClient
+    {
+        return new AssistantClientImp(this.http,null);
     }
 }

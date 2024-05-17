@@ -1,6 +1,6 @@
 import { ApiClientOptions } from "./api-client-options";
 import * as axios from 'axios'
-import { ApiError,Tenant } from "../public";
+import { ApiError } from "../public";
 import { AssistantsClient } from "./assistants-client";
 import { AssistantsClientImp } from "../private/assistants-client";
 
