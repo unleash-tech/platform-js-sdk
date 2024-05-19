@@ -1,4 +1,3 @@
-
 export interface FiltersResponse {
-    availableFilters: any;
+	availableFilters: any;
 }

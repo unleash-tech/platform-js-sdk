@@ -1,4 +1,3 @@
-
 export interface ApiResponse {
-    requestId: string;
+	requestId: string;
 }

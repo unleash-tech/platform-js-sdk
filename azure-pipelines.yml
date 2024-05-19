@@ -1,12 +1,12 @@
 trigger:
-  - master
-  - dev
+  tags:
+    include:
+      - 'v*'
+  branches:
+    include:
+      - 'main'
 
-pool: vmssagentpool
-
-variables:
-  - name: UNLEASH_ENV
-    value: prod
+pool: 'vmssagentpool'
 
 steps:
   - task: gitversion/setup@0
@@ -25,18 +25,14 @@ steps:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '16.10.0'
-
-  - task: npmAuthenticate@0
-    inputs:
-      workingFile: '.npmrc'
+      versionSpec: '16.10.0'  
 
   - task: Npm@1
     displayName: NPM Ci
     inputs:
       command: custom
       customCommand: ci
-
+  
   - task: Npm@1
     displayName: NPM Build
     inputs:
@@ -44,28 +40,32 @@ steps:
       customCommand: run build
 
   - task: Npm@1
+    displayName: NPM Lint
+    inputs:
+      command: custom
+      customCommand: run lint
+
+  - task: Npm@1
     displayName: NPM Version
     inputs:
+      workingDir: .
       command: custom
       customCommand: --no-git-tag-version version $(GitVersion.SemVer)
 
   - task: Npm@1
     displayName: NPM Publish
+    condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
     inputs:
       command: publish
+      workingDir: .  
       publishRegistry: useFeed
       publishFeed: unleash
 
-  - task: GitHubRelease@0
-    condition: eq(variables['build.sourceBranch'], 'refs/heads/master')
-    displayName: Create GitHub Release
-    inputs:
-      gitHubConnection: 'github-chaseappio'
-      repositoryName: '$(Build.Repository.Name)'
-      action: 'create'
-      target: '$(Build.SourceVersion)'
-      tagSource: 'manual'
-      title: '$(Build.DefinitionName) v$(Build.BuildNumber)'
-      addChangeLog: false
-      tag: v$(Build.BuildNumber)
-      isPreRelease: false
+#  - task: Npm@1
+#    displayName: NPM Publish
+#    condition: startsWith(variables['build.sourceBranch'], 'refs/tags/v')
+#    inputs:
+#      command: publish
+#      workingDir: .  
+#      publishRegistry: useFeed
+#      publishFeed: unleash

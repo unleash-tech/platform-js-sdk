@@ -1,18 +1,31 @@
 {
   "name": "@unleash-tech/platform-sdk",
   "version": "1.0.0",
-  "description": "",
-  "main": "lib/index.js",
+  "description": "SDK to the Unleash platform",
+  "main": "dist/lib/index.js",
+  "files": [
+    "dist/**",
+    "!dist/tsconfig.*"
+  ],
   "scripts": {
-    "build": "tsc -p .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -b .",
+    "lint": "eslint --cache .",
+    "lint:fix": "eslint --fix ."
   },
-  "author": "",
+  "author": "Unleash Tech LTD",
   "license": "ISC",
   "devDependencies": {
-    "tslib": "^2.6.2"
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.30.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "axios": "^1.6.7"
   }
-} 
+}

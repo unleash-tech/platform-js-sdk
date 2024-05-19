@@ -1,5 +1,5 @@
-import { Resource } from "./resource";
+import { Resource } from './resource';
 
 export interface AnswerReference {
-    resource: Resource;
+	resource: Resource;
 }

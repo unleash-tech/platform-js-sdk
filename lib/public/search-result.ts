@@ -1,8 +1,7 @@
-import { Resource } from "./resource";
-
+import { Resource } from './resource';
 
 export interface SearchResult {
-    resource: Resource;
-    snippet: string;
-    highlights: string[];
+	resource: Resource;
+	snippet: string;
+	highlights: string[];
 }

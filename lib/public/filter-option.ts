@@ -1,5 +1,4 @@
-
 export interface FilterOption {
-    value: string;
-    data: string;
+	value: string;
+	data: string;
 }

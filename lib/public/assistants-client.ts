@@ -1,5 +1,5 @@
-import { AssistantClient } from "./assistant-client";
+import { AssistantClient } from './assistant-client';
 
 export interface AssistantsClient {
-    withId(id:string) : AssistantClient
+	withId(id: string): AssistantClient;
 }

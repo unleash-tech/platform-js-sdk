@@ -1,3 +1,3 @@
-export * from './assistant-client'
-export * from './assistants-client'
-export * from './http-client'
+export * from './assistant-client';
+export * from './assistants-client';
+export * from './http-client';

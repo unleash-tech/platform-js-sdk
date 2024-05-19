@@ -1,0 +1,10 @@
+next-version: 1.0.0
+mode: ContinuousDeployment
+continuous-delivery-fallback-tag: alpha
+branches: 
+  main:
+    increment: Minor
+ignore:
+  sha: []
+merge-message-formats:
+  chaseappio: '^Merge pull request #(?<PullRequestNumber>\d+) (from|in) (?:chaseappio\/(?<SourceBranch>[^\s]*))(?: into (?<TargetBranch>[^\s]*))*'

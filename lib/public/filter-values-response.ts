@@ -1,7 +1,6 @@
-import { ApiResponse } from "./api-response";
-import { FilterOption } from "./filter-option";
+import { ApiResponse } from './api-response';
+import { FilterOption } from './filter-option';
 
-
-export interface FilterValuesResponse  extends ApiResponse{
-    options: FilterOption[];
+export interface FilterValuesResponse extends ApiResponse {
+	options: FilterOption[];
 }

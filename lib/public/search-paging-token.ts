@@ -1,4 +1,3 @@
-export interface SearchPagingToken
-{
-    token:string;
+export interface SearchPagingToken {
+	token: string;
 }
