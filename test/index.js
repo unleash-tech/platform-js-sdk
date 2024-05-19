@@ -6,7 +6,7 @@ var client = new unleash.ApiClient(
         {
             token:TOKEN,
             account:'itay@unleash.so',       
-            endpoint:'https://app.london.unleash.team'     
+            tenant:'https://app.london.unleash.team'     
         });
 
 

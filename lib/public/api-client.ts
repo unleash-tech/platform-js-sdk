@@ -4,13 +4,15 @@ import { ApiError } from "../public";
 import { AssistantsClient } from "./assistants-client";
 import { AssistantsClientImp } from "../private/assistants-client";
 
+const DEFAULT_TENANT = 'https://app.unleash.so';
+
 export class ApiClient {
     constructor(options: ApiClientOptions) {
                 
         this._axios = new axios.Axios(<any>{...axios.default.defaults, ...options.axios||{}});
 
         if (  !this._axios.defaults.baseURL )
-            this._axios.defaults.baseURL = (options.tenant || Tenant.Default)?.replace('https://app.','https://e-api.');
+            this._axios.defaults.baseURL = (options.tenant || DEFAULT_TENANT)?.replace('https://app.','https://e-api.');
 
         if ( options.token)
             this._axios.defaults.headers.common.Authorization='Bearer ' + options.token;
