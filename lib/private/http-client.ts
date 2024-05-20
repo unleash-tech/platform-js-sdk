@@ -5,12 +5,9 @@ export interface HttpClient {
 }
 
 export class AxiosHttpClient implements HttpClient {
-    constructor(private _axios: axios.Axios)
-    {
-
-    }
-    async post<Request, Response>(url: string, body: Request): Promise<Response> {
-        const resp = await this._axios.post(url,body);
-        return resp.data;
-    }
+	constructor(private _axios: axios.Axios) {}
+	async post<Request, Response>(url: string, body: Request): Promise<Response> {
+		const resp = await this._axios.post(url, body);
+		return resp.data;
+	}
 }
