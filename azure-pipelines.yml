@@ -53,19 +53,19 @@ steps:
       customCommand: --no-git-tag-version version $(GitVersion.SemVer)
 
   - task: Npm@1
-    displayName: NPM Publish
-    condition: eq(variables['build.sourceBranch'], 'refs/heads/main')
+    displayName: NPM Local Publish
+    condition: or(eq(variables['build.sourceBranch'], 'refs/heads/main'),startsWith(variables['build.sourceBranch'], 'refs/tags/v'))
     inputs:
       command: publish
       workingDir: .  
       publishRegistry: useFeed
       publishFeed: unleash
 
-#  - task: Npm@1
-#    displayName: NPM Publish
-#    condition: startsWith(variables['build.sourceBranch'], 'refs/tags/v')
-#    inputs:
-#      command: publish
-#      workingDir: .  
-#      publishRegistry: useFeed
-#      publishFeed: unleash
+  - task: Npm@1
+    displayName: NPM Global Publish
+    condition: startsWith(variables['build.sourceBranch'], 'refs/tags/v')
+    inputs:
+      command: publish
+      workingDir: .  
+      publishRegistry: useExternalRegistry
+      publishEndpoint: unleash-tech-global-feed

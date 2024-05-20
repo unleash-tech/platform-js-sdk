@@ -12,10 +12,7 @@ export class ApiClient {
 		const _axios = new axios.Axios(<any>{ ...axios.default.defaults, ...(options.axios || {}) });
 
 		if (!_axios.defaults.baseURL)
-			_axios.defaults.baseURL = (options.tenant || DEFAULT_TENANT)?.replace(
-				'https://app.',
-				'https://e-api.'
-			);
+			_axios.defaults.baseURL = (options.tenant || DEFAULT_TENANT)?.replace('https://app.', 'https://e-api.');
 
 		if (options.token) _axios.defaults.headers.common.Authorization = 'Bearer ' + options.token;
 
@@ -30,8 +27,10 @@ export class ApiClient {
 
 				if (error.response) {
 					const apiError: ApiError = { ...(<any>error.response.data), status: error.response.status };
-                    if ( apiError.reason=='Missing impersonation header' )
-                        apiError.title = 'The provided api token requires an unleash account on behalf of which to execute the call.\nPlease provide a valid account id or account email in the account field of the options arg provided in the ApiClient constructor'
+					if (apiError.reason == 'Missing impersonation header')
+						apiError.title =
+							// eslint-disable-next-line max-len
+							'The provided api token requires an unleash account on behalf of which to execute the call.\nPlease provide a valid account id or account email in the account field of the options arg provided in the ApiClient constructor';
 					return Promise.reject(apiError);
 				}
 
@@ -45,7 +44,7 @@ export class ApiClient {
 			}
 		);
 
-        this.http = new AxiosHttpClient(_axios);
+		this.http = new AxiosHttpClient(_axios);
 	}
 
 	get assistants(): AssistantsClient {

@@ -1,4 +1,4 @@
-import { Filters } from "./filters";
+import { Filters } from './filters';
 
 export interface AnswerRequest {
 	filters?: Filters;
