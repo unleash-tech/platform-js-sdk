@@ -13,3 +13,4 @@ export * from './search-sort';
 export * from './search-sort-by';
 export * from './search-sort-order';
 export * from './search-paging';
+export * from './filters'

@@ -1,6 +1,6 @@
+import { Filters } from "./filters";
+
 export interface AnswerRequest {
-	filters?: {
-		[name: string]: boolean | string | number;
-	};
+	filters?: Filters;
 	query: string;
 }
