@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "SDK to the Unleash platform",
   "main": "dist/lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unleash-tech/platform-js-sdk.git"
+  },
   "files": [
     "dist/**",
     "!dist/tsconfig.*"
   ],
+  "homepage": "https://www.unleash.so",
+  "bugs": "https://github.com/unleash-tech/platform-js-sdk/issues",
   "scripts": {
     "build": "tsc -b .",
     "lint": "eslint --cache .",
@@ -19,7 +25,7 @@
     "@typescript-eslint/parser": "^5.30.0",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.0",
     "tslib": "^2.6.2",
