@@ -60,7 +60,7 @@ To create an assistant that can be used via the API go to the assistants page on
 
 Proceed to configure the assistant behavior and data sources and save the changes
 
-<img src="assets/Untitled%202" width="1000">
+<img src="assets/Untitled%202.png" width="1000">
 
 Upon saving the assistant id will be available in the url of the page, the last fragment
 
