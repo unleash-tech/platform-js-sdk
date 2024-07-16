@@ -74,3 +74,9 @@ There are four main methods which an assistant expose:
 - filterValues - return the set of filter values that are supported for a given filter (e.g. for the appId filter it will return values such as: ‘notion’, ‘confluence’, etc..)
 
 for the full description of those endpoints contracts refer to the swagger api
+
+
+## Postman Examples Collection
+
+- **File**: `unleash.postman_collection.json`
+- **Contents**: Examples for querying the API, managing filters, retrieving filter statistics, performing searches, and generating custom user tokens.
