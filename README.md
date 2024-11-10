@@ -72,6 +72,7 @@ There are four main methods which an assistant expose:
 - answer - generate an ai answer for a user question
 - filters - return the set of supported filters for the assistant based on the actual data sources that it has access to
 - filterValues - return the set of filter values that are supported for a given filter (e.g. for the appId filter it will return values such as: ‘notion’, ‘confluence’, etc..)
+- chat - generate an ai answer for a user question and return the answer in stream. 
 
 for the full description of those endpoints contracts refer to the swagger api
 
