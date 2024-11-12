@@ -1,12 +1,11 @@
 import { Filters } from './filters';
 
 export interface ChatRequest {
-	query: string;
 	filters?: Filters;
 	assistantId?: string;
-	messages?: ChatConversation[];
+	messages: ChatConversation[];
 	chat?: ChatAssistantChatRequest;
-	enableStreaming?: boolean;
+	stream?: boolean;
 }
 
 export interface ChatAssistantChatRequest {
