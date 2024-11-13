@@ -16,21 +16,17 @@ export interface ChatResultItem {
 	type: string;
 	requestId?: string;
 	references: AnswerSource[];
-	duration: number;
 }
 export interface SourceReference {
 	type: string;
 	referenceIds?: string[];
 	Position: number;
-	duration: number;
 }
 export interface ChatAnswerItem {
 	type: string;
 	answer?: string;
-	duration: number;
 }
 export interface ChatResourceIdsItem {
 	type: string;
 	resourceIds?: string[];
-	duration: number;
 }
