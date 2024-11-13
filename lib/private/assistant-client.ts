@@ -2,13 +2,15 @@ import { AnswerResponse } from '../public/answer-response';
 import { AnswerRequest } from '../public/answer-request';
 import { SearchRequest } from '../public/search-request';
 import { SearchResponse } from '../public/search-response';
-import { ChatRequest } from '../public/chat-request';
-import { ChatResponseType } from '../public/chat-response';
+import { ChatRequestBlock, ChatRequestStream } from '../public/chat-request';
+import { ChatResponse, ChatResponsePart } from '../public/chat-response';
 import { FilterValuesRequest } from '../public/filter-values-request';
 import { FilterValuesResponse } from '../public/filter-values-response';
 import { AssistantClient } from '../public/assistant-client';
 import { FiltersResponse } from '../public/filters-response';
 import { HttpClient } from '../private/http-client';
+
+type ChatInnerRequestBlock = ChatRequestBlock & { assistantId: string };
 
 export class AssistantClientImp implements AssistantClient {
 	constructor(
@@ -29,7 +31,11 @@ export class AssistantClientImp implements AssistantClient {
 	async search(req: SearchRequest): Promise<SearchResponse> {
 		return this.http.post('/search', { ...req, assistantId: this.id });
 	}
-	async *chat(req: ChatRequest): AsyncGenerator<ChatResponseType> {
+
+	chat(req: ChatRequestStream): AsyncGenerator<ChatResponsePart>;
+	chat(req: ChatRequestBlock): Promise<ChatResponse>;
+
+	async *chat(req: ChatRequestStream | ChatRequestBlock): AsyncGenerator<ChatResponsePart> | Promise<ChatResponse> {
 		const res = this.http.streamFetch('/chat', { ...req, assistantId: this.id });
 		if (req.stream) {
 			const encoder = new TextEncoder();
@@ -43,7 +49,7 @@ export class AssistantClientImp implements AssistantClient {
 				for (const line of lines.filter((l) => l.length > 0)) {
 					if (line.startsWith('data: ')) {
 						current = line.slice(6);
-						const response: ChatResponseType = JSON.parse(current);
+						const response: ChatResponsePart = JSON.parse(current);
 						yield response;
 						current = '';
 					} else {
@@ -52,7 +58,11 @@ export class AssistantClientImp implements AssistantClient {
 				}
 			}
 		} else {
-			return await this.http.post('/chat', { ...req, assistantId: this.id });
+			const request: ChatInnerRequestBlock = {
+				...(<ChatRequestBlock>req),
+				assistantId: this.id,
+			};
+			return await this.http.post<ChatInnerRequestBlock, ChatResponse>('/chat', request);
 		}
 	}
 }

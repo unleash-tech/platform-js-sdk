@@ -21,20 +21,15 @@ export class AxiosHttpClient implements HttpClient {
 	}
 
 	async *streamFetch<Request>(url: string, body: Request): AsyncGenerator<string, void, unknown> {
-		try {
-			const response = await this._axios.request<Readable>({
-				method: 'post',
-				url,
-				data: body,
-				responseType: 'stream',
-			});
+		const response = await this._axios.request<Readable>({
+			method: 'post',
+			url,
+			data: body,
+			responseType: 'stream',
+		});
 
-			for await (const chunk of this.streamToAsyncIterable(response.data)) {
-				yield chunk;
-			}
-		} catch (error) {
-			console.error('Request error:', error);
-			throw error;
+		for await (const chunk of this.streamToAsyncIterable(response.data)) {
+			yield chunk;
 		}
 	}
 }

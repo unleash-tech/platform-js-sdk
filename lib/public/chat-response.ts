@@ -1,32 +1,25 @@
-import { AnswerReference as AnswerSource } from './answer-reference';
+import { AnswerReference as ChatAnswerSource } from './answer-reference';
 
-export type ChatResponseType = ChatResponse | ChatResultItem | ChatAnswerItem | ChatResourceIdsItem | SourceReference;
+export type ChatResponsePart = ChatSourcesPart | ChatReferencePart;
 
 export interface ChatResponse {
-	answer: ChatAnswer;
-	references: AnswerSource[];
-	requestId?: string;
+	answer: ChatAnswerPart;
+	references: ChatAnswerSource[];
+	requestId: string;
 }
-export interface ChatAnswer {
-	answer?: string;
-	resourceIds?: string[];
-	references?: SourceReference[];
+export interface ChatAnswerPart {
+	answer: string;
+	resourceIds: string[];
+	sources: SourceReference[];
 }
-export interface ChatResultItem {
+export interface ChatSourcesPart {
 	type: string;
-	requestId?: string;
-	references: AnswerSource[];
+	requestId: string;
+	sources: ChatAnswerSource[];
 }
 export interface SourceReference {
 	type: string;
-	referenceIds?: string[];
+	referenceIds: string[];
 	Position: number;
 }
-export interface ChatAnswerItem {
-	type: string;
-	answer?: string;
-}
-export interface ChatResourceIdsItem {
-	type: string;
-	resourceIds?: string[];
-}
+export type ChatReferencePart = SourceReference;
