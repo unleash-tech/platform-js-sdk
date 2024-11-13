@@ -30,26 +30,22 @@ export class AssistantClientImp implements AssistantClient {
 		return this.http.post('/search', { ...req, assistantId: this.id });
 	}
 	async *chat(req: ChatRequest): AsyncGenerator<ChatResponseType> {
-		const res = this.http.fetchAndStreamData('/chat', { ...req, assistantId: this.id });
+		const res = this.http.streamFetch('/chat', { ...req, assistantId: this.id });
 		if (req.stream) {
+			const encoder = new TextEncoder();
 			const decoder = new TextDecoder();
 			let current = '';
 
 			for await (const chunk of res) {
-				const uint8Array = new TextEncoder().encode(chunk);
+				const uint8Array = encoder.encode(chunk);
 				const decodedChunk = decoder.decode(uint8Array, { stream: true });
 				const lines = decodedChunk.split('\n');
 				for (const line of lines.filter((l) => l.length > 0)) {
 					if (line.startsWith('data: ')) {
 						current = line.slice(6);
-						try {
-							const response: ChatResponseType = JSON.parse(current);
-							yield response;
-							current = '';
-						} catch (error) {
-							console.error('Error parsing response:', error);
-							throw new Error('Failed to parse response');
-						}
+						const response: ChatResponseType = JSON.parse(current);
+						yield response;
+						current = '';
 					} else {
 						current += line;
 					}

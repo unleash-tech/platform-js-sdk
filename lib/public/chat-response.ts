@@ -13,24 +13,24 @@ export interface ChatAnswer {
 	references?: ChatReferenceItem[];
 }
 export interface ChatResultItem {
-	Type: string;
+	type: string;
 	requestId?: string;
 	references: AnswerReference[];
-	Duration: number;
+	duration: number;
 }
 export interface ChatReferenceItem {
-	Type: string;
+	type: string;
 	referenceIds?: string[];
 	Position: number;
-	Duration: number;
+	duration: number;
 }
 export interface ChatAnswerItem {
-	Type: string;
+	type: string;
 	answer?: string;
-	Duration: number;
+	duration: number;
 }
 export interface ChatResourceIdsItem {
-	Type: string;
+	type: string;
 	resourceIds?: string[];
-	Duration: number;
+	duration: number;
 }

@@ -3,7 +3,7 @@ import { Readable } from 'stream';
 
 export interface HttpClient {
 	post<Request, Response>(url: string, body: Request): Promise<Response>;
-	fetchAndStreamData<Request>(url: string, body: Request): AsyncGenerator<string, void, unknown>;
+	streamFetch<Request>(url: string, body: Request): AsyncGenerator<string, void, unknown>;
 }
 
 export class AxiosHttpClient implements HttpClient {
@@ -20,7 +20,7 @@ export class AxiosHttpClient implements HttpClient {
 		}
 	}
 
-	async *fetchAndStreamData<Request>(url: string, body: Request): AsyncGenerator<string, void, unknown> {
+	async *streamFetch<Request>(url: string, body: Request): AsyncGenerator<string, void, unknown> {
 		try {
 			const response = await this._axios.request<Readable>({
 				method: 'post',
