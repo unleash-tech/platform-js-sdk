@@ -52,13 +52,7 @@ export class AssistantClientImp implements AssistantClient {
 				}
 			}
 		} else {
-			let fullResponse = '';
-			for await (const chunk of res) {
-				fullResponse += chunk;
-			}
-
-			const response: ChatResponseType = JSON.parse(fullResponse);
-			yield response;
+			return await this.http.post('/chat', { ...req, assistantId: this.id });
 		}
 	}
 }
