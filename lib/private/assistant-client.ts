@@ -36,8 +36,8 @@ export class AssistantClientImp implements AssistantClient {
 	chat(req: ChatRequestBlock): Promise<ChatResponse>;
 
 	async *chat(req: ChatRequestStream | ChatRequestBlock): AsyncGenerator<ChatResponsePart> | Promise<ChatResponse> {
-		const res = this.http.streamFetch('/chat', { ...req, assistantId: this.id });
 		if (req.stream) {
+			const res = this.http.streamFetch('/chat', { ...req, assistantId: this.id });
 			const encoder = new TextEncoder();
 			const decoder = new TextDecoder();
 			let current = '';
