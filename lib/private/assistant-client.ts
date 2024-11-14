@@ -76,7 +76,7 @@ export class ChatClientImp implements ChatClient {
 			}
 		}
 	}
-	async json(): Promise<ChatResponse> {
+	async complete(): Promise<ChatResponse> {
 		const request: ChatInnerRequest = {
 			...(<ChatRequest>this.req),
 			assistantId: this.id,

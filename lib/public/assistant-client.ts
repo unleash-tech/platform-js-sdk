@@ -18,5 +18,5 @@ export interface AssistantClient {
 
 export interface ChatClient {
 	stream(): AsyncGenerator<ChatResponsePart>;
-	json(): Promise<ChatResponse>;
+	complete(): Promise<ChatResponse>;
 }
