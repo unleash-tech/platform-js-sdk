@@ -2,15 +2,15 @@ import { AnswerResponse } from '../public/answer-response';
 import { AnswerRequest } from '../public/answer-request';
 import { SearchRequest } from '../public/search-request';
 import { SearchResponse } from '../public/search-response';
-import { ChatRequestBlock, ChatRequestStream } from '../public/chat-request';
+import { ChatRequest } from '../public/chat-request';
 import { ChatResponse, ChatResponsePart } from '../public/chat-response';
 import { FilterValuesRequest } from '../public/filter-values-request';
 import { FilterValuesResponse } from '../public/filter-values-response';
-import { AssistantClient } from '../public/assistant-client';
+import { AssistantClient, ChatClient } from '../public/assistant-client';
 import { FiltersResponse } from '../public/filters-response';
 import { HttpClient } from '../private/http-client';
 
-type ChatInnerRequestBlock = ChatRequestBlock & { assistantId: string };
+type ChatInnerRequest = ChatRequest & { assistantId: string };
 
 export class AssistantClientImp implements AssistantClient {
 	constructor(
@@ -32,37 +32,55 @@ export class AssistantClientImp implements AssistantClient {
 		return this.http.post('/search', { ...req, assistantId: this.id });
 	}
 
-	chat(req: ChatRequestStream): AsyncGenerator<ChatResponsePart>;
-	chat(req: ChatRequestBlock): Promise<ChatResponse>;
+	chat(req: ChatRequest): ChatClient {
+		return new ChatClientImp(this.http, this.id, req);
+	}
+}
 
-	async *chat(req: ChatRequestStream | ChatRequestBlock): AsyncGenerator<ChatResponsePart> | Promise<ChatResponse> {
-		if (req.stream) {
-			const res = this.http.streamFetch('/chat', { ...req, assistantId: this.id });
-			const encoder = new TextEncoder();
-			const decoder = new TextDecoder();
-			let current = '';
+export class ChatClientImp implements ChatClient {
+	constructor(
+		protected http: HttpClient,
 
-			for await (const chunk of res) {
-				const uint8Array = encoder.encode(chunk);
-				const decodedChunk = decoder.decode(uint8Array, { stream: true });
-				const lines = decodedChunk.split('\n');
-				for (const line of lines.filter((l) => l.length > 0)) {
+		private id: string,
+		private req: ChatRequest
+	) {}
+
+	async *stream(): AsyncGenerator<ChatResponsePart> {
+		const res = this.http.streamFetch('/chat', { ...this.req, assistantId: this.id, stream: true });
+		const encoder = new TextEncoder();
+		const decoder = new TextDecoder();
+		let current = '';
+		for await (const chunk of res) {
+			const uint8Array = encoder.encode(chunk);
+			const decodedChunk = decoder.decode(uint8Array, { stream: true });
+			const lines = decodedChunk.split('\n');
+			for (const line of lines.filter((l) => l.length > 0)) {
+				try {
 					if (line.startsWith('data: ')) {
+						if (current) {
+							const response: ChatResponsePart = JSON.parse(current);
+							yield response;
+						}
 						current = line.slice(6);
-						const response: ChatResponsePart = JSON.parse(current);
-						yield response;
-						current = '';
 					} else {
 						current += line;
 					}
+
+					if (current) {
+						const response: ChatResponsePart = JSON.parse(current);
+						yield response;
+					}
+				} catch (error) {
+					console.error('Error during streaming chat:', error, current);
 				}
 			}
-		} else {
-			const request: ChatInnerRequestBlock = {
-				...(<ChatRequestBlock>req),
-				assistantId: this.id,
-			};
-			return await this.http.post<ChatInnerRequestBlock, ChatResponse>('/chat', request);
 		}
+	}
+	async json(): Promise<ChatResponse> {
+		const request: ChatInnerRequest = {
+			...(<ChatRequest>this.req),
+			assistantId: this.id,
+		};
+		return await this.http.post<ChatInnerRequest, ChatResponse>('/chat', request);
 	}
 }
