@@ -79,5 +79,5 @@ for the full description of those endpoints contracts refer to the swagger api
 
 ## Postman Examples Collection
 
-- **File**: `unleash.postman_collection.json`
+- **File**: [unleash.postman_collection.json](https://github.com/unleash-tech/platform-js-sdk/examples/unleash.postman_collection)
 - **Contents**: Examples for querying the API, managing filters, retrieving filter statistics, performing searches, and generating custom user tokens.
