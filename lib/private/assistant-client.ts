@@ -35,7 +35,6 @@ export class AssistantClientImp implements AssistantClient {
 export class ChatClientImp implements ChatClient {
 	constructor(
 		protected http: HttpClient,
-
 		private id: string,
 		private req: ChatRequest
 	) {}
@@ -60,14 +59,13 @@ export class ChatClientImp implements ChatClient {
 					} else {
 						current += line;
 					}
-
-					if (current) {
-						const response: ChatResponseEvent = JSON.parse(current);
-						yield response;
-					}
 				} catch (error) {
 					console.error('Error during streaming chat:', error, current);
 				}
+			}
+			if (current) {
+				const response: ChatResponseEvent = JSON.parse(current);
+				yield response;
 			}
 		}
 	}
