@@ -1,9 +1,7 @@
-import { AnswerResponse } from '../public/answer-response';
-import { AnswerRequest } from '../public/answer-request';
 import { SearchRequest } from '../public/search-request';
 import { SearchResponse } from '../public/search-response';
 import { ChatRequest } from '../public/chat-request';
-import { ChatResponse, ChatResponsePart } from '../public/chat-response';
+import { ChatResponse, ChatResponseEvent } from '../public/chat-response';
 import { FilterValuesRequest } from '../public/filter-values-request';
 import { FilterValuesResponse } from '../public/filter-values-response';
 import { AssistantClient, ChatClient } from '../public/assistant-client';
@@ -25,9 +23,6 @@ export class AssistantClientImp implements AssistantClient {
 		return this.http.post('/filters', { ...req, assistantId: this.id });
 	}
 
-	async answer(req: AnswerRequest): Promise<AnswerResponse> {
-		return this.http.post('/answers', { ...req, assistantId: this.id });
-	}
 	async search(req: SearchRequest): Promise<SearchResponse> {
 		return this.http.post('/search', { ...req, assistantId: this.id });
 	}
@@ -45,7 +40,7 @@ export class ChatClientImp implements ChatClient {
 		private req: ChatRequest
 	) {}
 
-	async *stream(): AsyncGenerator<ChatResponsePart> {
+	async *stream(): AsyncGenerator<ChatResponseEvent> {
 		const res = this.http.streamFetch('/chat', { ...this.req, assistantId: this.id, stream: true });
 		const encoder = new TextEncoder();
 		const decoder = new TextDecoder();
@@ -58,7 +53,7 @@ export class ChatClientImp implements ChatClient {
 				try {
 					if (line.startsWith('data: ')) {
 						if (current) {
-							const response: ChatResponsePart = JSON.parse(current);
+							const response: ChatResponseEvent = JSON.parse(current);
 							yield response;
 						}
 						current = line.slice(6);
@@ -67,7 +62,7 @@ export class ChatClientImp implements ChatClient {
 					}
 
 					if (current) {
-						const response: ChatResponsePart = JSON.parse(current);
+						const response: ChatResponseEvent = JSON.parse(current);
 						yield response;
 					}
 				} catch (error) {

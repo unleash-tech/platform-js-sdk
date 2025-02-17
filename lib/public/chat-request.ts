@@ -1,12 +1,18 @@
 import { Filters } from './filters';
+import { MessageRole } from './message-role';
 
 export interface ChatRequest {
-	filters?: Filters;
 	messages: ChatMessage[];
+	enterpriseSearch?: ChatEnterpriseSearch;
 	stream?: boolean;
+	threadId?: string;
 }
 
 export interface ChatMessage {
 	text: string;
-	role: string;
+	role: MessageRole;
+}
+
+export interface ChatEnterpriseSearch {
+	filters?: Filters;
 }
