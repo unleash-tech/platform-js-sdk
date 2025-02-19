@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "74d857cb-4021-4936-9f9e-6994b101adfd",
-		"name": "Iris",
+		"_postman_id": "8b4662d3-f77c-45f4-b5c4-bf6fd56d3b5d",
+		"name": "Unleash",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30710828"
+		"_exporter_id": "40953197"
 	},
 	"item": [
 		{
-			"name": "Answer",
+			"name": "Chats - Searches for similar questions or answers with streaming",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{Token}",
+							"value": "{token}",
 							"type": "string"
 						}
 					]
@@ -29,7 +29,52 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Query\": \"What is unleash?\",\r\n    //\"AssistantId\": \"{AssistantId}\",\r\n    \"Filters\": {\r\n        \"AppId\": [\"notion\"]\r\n    }\r\n}",
+					"raw": "{\r\n    \"messages\": [\r\n        {\r\n            \"text\": \"what is the weather?\",\r\n            \"role\": \"user\"\r\n        }\r\n    ],        \r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\r\n    \"enterpriseSearch\": {\r\n        \"filters\": {\r\n            \"appId\": [\"notion\"]\r\n        }\r\n    },\r\n    \"threadId\": \"xxxxxx\",\r\n    \"stream\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://e-api.unleash.so/chats",
+					"protocol": "https",
+					"host": [
+						"e-api",
+						"unleash",
+						"so"
+					],
+					"path": [
+						"chats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Answers - Searches for similar questions or answers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{token}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "unleash-account",
+						"value": "user@domain.so",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": \"what is the weather?\",\r\n    \"filters\": {\r\n        \"appId\": [\"notion\"]\r\n    },\r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,52 +97,7 @@
 			"response": []
 		},
 		{
-			"name": "Chat",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{Token}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "unleash-account",
-						"value": "user@domain.so",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"AssistantId\": \"{AssistantId}\",\r\n    \"Filters\": {\r\n        \"AppId\": [\"notion\"]\r\n    },\r\n    \"Messages\": [\r\n        {\r\n            \"Text\": \"What is unleash? give me very short answer\",\r\n            \"Role\": \"user\"\r\n        },\r\n        {\r\n            \"Text\": \"Unleash is an AI-powered enterprise search and Q&A tool that integrates with various workplace applications to provide quick and accurate information retrieval. It leverages generative AI to deliver personalized answers, analyses, and summaries, enhancing productivity and efficiency across organizations.\",\r\n            \"Role\": \"assistant\"\r\n        },\r\n        {\r\n            \"Text\": \"what is unleash? give me a longer answer\",\r\n            \"Role\": \"user\"\r\n        }\r\n    ],\r\n    \"stream\": true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/chat",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"chat"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Filters",
+			"name": "Filters - Performs a textual search through the filters available to the client",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -119,7 +119,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Name\": \"createdBy\"\r\n}",
+					"raw": "{\r\n    \"name\": \"createdBy\",\r\n    \"query\": \"query\",\r\n    \"limit\": 10,    \r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -142,7 +142,7 @@
 			"response": []
 		},
 		{
-			"name": "Filters Stats",
+			"name": "Filters Stats - Retrieves basic filter availability info",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -164,7 +164,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n}",
+					"raw": "{\r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -188,7 +188,7 @@
 			"response": []
 		},
 		{
-			"name": "Search",
+			"name": "Search - Searches for resources using a full-text search",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -210,7 +210,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Query\": \"go links\",\r\n    \"AssistantId\": \"{id}\",\r\n    \"Filters\": {\r\n        \"AppId\": [\"github\"]\r\n    }\r\n}",
+					"raw": "{\r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\r\n    \"query\": \"go links\",    \r\n    \"contentSearch\": false,\r\n    \"semanticSearch\": false,\r\n    \"sort\": {\r\n        \"by\": \"relevancy|alphabetical|recency\"\r\n    },\r\n    \"paging\": {\r\n        \"nextToken\": \"{token}\",\r\n        \"size\": 10\r\n    },\r\n    \"filters\": {\r\n        \"AppId\": [\"github\"]\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -233,7 +233,7 @@
 			"response": []
 		},
 		{
-			"name": "Generate Custom User Token",
+			"name": "Tokens - Generate Custom User Token",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -242,7 +242,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Token\": \"{token}\",\r\n    \"EmbedId\": \"{id}\"\r\n}",
+					"raw": "{\r\n    \"token\": \"{token}\",\r\n    \"embedId\": \"{id}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
