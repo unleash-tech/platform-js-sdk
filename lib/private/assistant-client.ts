@@ -1,14 +1,19 @@
-import { AnswerResponse } from '../public/answer-response';
-import { AnswerRequest } from '../public/answer-request';
-import { SearchRequest } from '../public/search-request';
-import { SearchResponse } from '../public/search-response';
-import { ChatRequest } from '../public/chat-request';
-import { ChatResponse, ChatResponsePart } from '../public/chat-response';
-import { FilterValuesRequest } from '../public/filter-values-request';
-import { FilterValuesResponse } from '../public/filter-values-response';
-import { AssistantClient, ChatClient } from '../public/assistant-client';
-import { FiltersResponse } from '../public/filters-response';
-import { HttpClient } from '../private/http-client';
+import {
+	AnswerRequest,
+	AnswerResponse,
+	AssistantClient,
+	ChatClient,
+	ChatRequest,
+	ChatResponse,
+	ChatResponseEvent,
+	FiltersResponse,
+	FilterValuesRequest,
+	FilterValuesResponse,
+	SearchRequest,
+	SearchResponse,
+} from '../public';
+
+import { HttpClient } from '../private';
 
 type ChatInnerRequest = ChatRequest & { assistantId: string };
 
@@ -28,6 +33,7 @@ export class AssistantClientImp implements AssistantClient {
 	async answer(req: AnswerRequest): Promise<AnswerResponse> {
 		return this.http.post('/answers', { ...req, assistantId: this.id });
 	}
+
 	async search(req: SearchRequest): Promise<SearchResponse> {
 		return this.http.post('/search', { ...req, assistantId: this.id });
 	}
@@ -40,13 +46,12 @@ export class AssistantClientImp implements AssistantClient {
 export class ChatClientImp implements ChatClient {
 	constructor(
 		protected http: HttpClient,
-
 		private id: string,
 		private req: ChatRequest
 	) {}
 
-	async *stream(): AsyncGenerator<ChatResponsePart> {
-		const res = this.http.streamFetch('/chat', { ...this.req, assistantId: this.id, stream: true });
+	async *stream(): AsyncGenerator<ChatResponseEvent> {
+		const res = this.http.streamFetch('/chats', { ...this.req, assistantId: this.id, stream: true });
 		const encoder = new TextEncoder();
 		const decoder = new TextDecoder();
 		let current = '';
@@ -58,22 +63,21 @@ export class ChatClientImp implements ChatClient {
 				try {
 					if (line.startsWith('data: ')) {
 						if (current) {
-							const response: ChatResponsePart = JSON.parse(current);
+							const response: ChatResponseEvent = JSON.parse(current);
 							yield response;
 						}
 						current = line.slice(6);
 					} else {
 						current += line;
 					}
-
-					if (current) {
-						const response: ChatResponsePart = JSON.parse(current);
-						yield response;
-					}
 				} catch (error) {
 					console.error('Error during streaming chat:', error, current);
 				}
 			}
+		}
+		if (current) {
+			const response: ChatResponseEvent = JSON.parse(current);
+			yield response;
 		}
 	}
 	async complete(): Promise<ChatResponse> {
@@ -81,6 +85,6 @@ export class ChatClientImp implements ChatClient {
 			...(<ChatRequest>this.req),
 			assistantId: this.id,
 		};
-		return await this.http.post<ChatInnerRequest, ChatResponse>('/chat', request);
+		return await this.http.post<ChatInnerRequest, ChatResponse>('/chats', request);
 	}
 }

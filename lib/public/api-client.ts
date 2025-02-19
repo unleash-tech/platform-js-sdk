@@ -9,7 +9,10 @@ const DEFAULT_TENANT = 'https://app.unleash.so';
 
 export class ApiClient {
 	constructor(options: ApiClientOptions) {
-		const _axios = new axios.Axios(<any>{ ...axios.default.defaults, ...(options.axios || {}) });
+		const _axios = new axios.Axios(<any>{
+			...axios.default.defaults,
+			...(options.axios || {}),
+		});
 
 		if (!_axios.defaults.baseURL)
 			_axios.defaults.baseURL = (options.tenant || DEFAULT_TENANT)?.replace('https://app.', 'https://e-api.');
@@ -26,7 +29,10 @@ export class ApiClient {
 				const error = <axios.AxiosError>e;
 
 				if (error.response) {
-					const apiError: ApiError = { ...(<any>error.response.data), status: error.response.status };
+					const apiError: ApiError = {
+						...(<any>error.response.data),
+						status: error.response.status,
+					};
 					if (apiError.reason == 'Missing impersonation header')
 						apiError.title =
 							'The provided api token requires an unleash account on behalf of which to execute' +
