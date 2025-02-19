@@ -1,4 +1,6 @@
 export * from './answer-reference';
+export * from './answer-request';
+export * from './answer-response';
 export * from './api-client-options';
 export * from './api-client';
 export * from './api-error';

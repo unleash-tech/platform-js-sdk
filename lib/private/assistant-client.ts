@@ -1,12 +1,19 @@
-import { SearchRequest } from '../public/search-request';
-import { SearchResponse } from '../public/search-response';
-import { ChatRequest } from '../public/chat-request';
-import { ChatResponse, ChatResponseEvent } from '../public/chat-response';
-import { FilterValuesRequest } from '../public/filter-values-request';
-import { FilterValuesResponse } from '../public/filter-values-response';
-import { AssistantClient, ChatClient } from '../public/assistant-client';
-import { FiltersResponse } from '../public/filters-response';
-import { HttpClient } from '../private/http-client';
+import {
+	AnswerRequest,
+	AnswerResponse,
+	AssistantClient,
+	ChatClient,
+	ChatRequest,
+	ChatResponse,
+	ChatResponseEvent,
+	FiltersResponse,
+	FilterValuesRequest,
+	FilterValuesResponse,
+	SearchRequest,
+	SearchResponse,
+} from '../public';
+
+import { HttpClient } from '../private';
 
 type ChatInnerRequest = ChatRequest & { assistantId: string };
 
@@ -21,6 +28,10 @@ export class AssistantClientImp implements AssistantClient {
 
 	async filterValues(req: FilterValuesRequest): Promise<FilterValuesResponse> {
 		return this.http.post('/filters', { ...req, assistantId: this.id });
+	}
+
+	async answer(req: AnswerRequest): Promise<AnswerResponse> {
+		return this.http.post('/answers', { ...req, assistantId: this.id });
 	}
 
 	async search(req: SearchRequest): Promise<SearchResponse> {
@@ -40,7 +51,7 @@ export class ChatClientImp implements ChatClient {
 	) {}
 
 	async *stream(): AsyncGenerator<ChatResponseEvent> {
-		const res = this.http.streamFetch('/chat', { ...this.req, assistantId: this.id, stream: true });
+		const res = this.http.streamFetch('/chats', { ...this.req, assistantId: this.id, stream: true });
 		const encoder = new TextEncoder();
 		const decoder = new TextDecoder();
 		let current = '';
@@ -63,10 +74,10 @@ export class ChatClientImp implements ChatClient {
 					console.error('Error during streaming chat:', error, current);
 				}
 			}
-			if (current) {
-				const response: ChatResponseEvent = JSON.parse(current);
-				yield response;
-			}
+		}
+		if (current) {
+			const response: ChatResponseEvent = JSON.parse(current);
+			yield response;
 		}
 	}
 	async complete(): Promise<ChatResponse> {
@@ -74,6 +85,6 @@ export class ChatClientImp implements ChatClient {
 			...(<ChatRequest>this.req),
 			assistantId: this.id,
 		};
-		return await this.http.post<ChatInnerRequest, ChatResponse>('/chat', request);
+		return await this.http.post<ChatInnerRequest, ChatResponse>('/chats', request);
 	}
 }
