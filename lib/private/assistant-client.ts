@@ -15,7 +15,7 @@ import {
 
 import { HttpClient } from '../private';
 
-type ChatInnerRequest = ChatRequest & { assistantId: string };
+type ChatInnerRequest = ChatRequest & { assistantId: string; stream: boolean };
 
 export class AssistantClientImp implements AssistantClient {
 	constructor(
@@ -51,7 +51,12 @@ export class ChatClientImp implements ChatClient {
 	) {}
 
 	async *stream(): AsyncGenerator<ChatResponseEvent> {
-		const res = this.http.streamFetch('/chats', { ...this.req, assistantId: this.id, stream: true });
+		const request: ChatInnerRequest = {
+			...this.req,
+			assistantId: this.id,
+			stream: true,
+		};
+		const res = this.http.streamFetch('/chats', request);
 		const encoder = new TextEncoder();
 		const decoder = new TextDecoder();
 		let current = '';
@@ -82,8 +87,9 @@ export class ChatClientImp implements ChatClient {
 	}
 	async complete(): Promise<ChatResponse> {
 		const request: ChatInnerRequest = {
-			...(<ChatRequest>this.req),
+			...this.req,
 			assistantId: this.id,
+			stream: false,
 		};
 		return await this.http.post<ChatInnerRequest, ChatResponse>('/chats', request);
 	}

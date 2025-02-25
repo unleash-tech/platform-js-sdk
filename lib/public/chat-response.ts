@@ -26,8 +26,7 @@ export interface ChatMessagePart {
 export interface ChatMessageTextPart extends ChatMessagePart {
 	type: 'Text';
 	format: 'markdown';
-	text: string; // current api text (parital json)
-	answer: string; //  old api text
+	text: string;
 }
 
 export interface ChatMessageInlineReferencesPart extends ChatMessagePart {
