@@ -1,4 +1,3 @@
-import { AnswerReference as ChatAnswerSource } from './answer-reference';
 import { MessageRole } from './message-role';
 import { Reference } from './reference';
 import { Resource } from './resource';
@@ -8,15 +7,14 @@ export type MessagePartType = 'Text' | 'InlineReference';
 export interface ChatResponse {
 	requestId: string;
 	message: ChatMessageResponse;
-	references: ChatAnswerSource[];
+	resources: Resource[];
+	references: Reference[];
+	threadId: string;
 }
 
 export interface ChatMessageResponse {
 	role: MessageRole;
 	parts: ChatMessagePart[];
-	resources: Resource[];
-	references: Reference[];
-	threadId: string;
 }
 
 export interface ChatMessagePart {
