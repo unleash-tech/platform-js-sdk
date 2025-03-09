@@ -1,268 +1,1308 @@
 {
-	"info": {
-		"_postman_id": "8b4662d3-f77c-45f4-b5c4-bf6fd56d3b5d",
-		"name": "Unleash",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40953197"
-	},
-	"item": [
-		{
-			"name": "Chats - Searches for similar questions or answers with streaming",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{token}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "unleash-account",
-						"value": "user@domain.so",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"messages\": [\r\n        {\r\n            \"text\": \"what is the weather?\",\r\n            \"role\": \"user\"\r\n        }\r\n    ],        \r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\r\n    \"enterpriseSearch\": {\r\n        \"filters\": {\r\n            \"appId\": [\"notion\"]\r\n        }\r\n    },\r\n    \"threadId\": \"xxxxxx\",\r\n    \"stream\": false\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/chats",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"chats"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Answers - Searches for similar questions or answers",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{token}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "unleash-account",
-						"value": "user@domain.so",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"query\": \"what is the weather?\",\r\n    \"filters\": {\r\n        \"appId\": [\"notion\"]\r\n    },\r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/answers",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"answers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Filters - Performs a textual search through the filters available to the client",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{token}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "unleash-account",
-						"value": "user@domain.so",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"createdBy\",\r\n    \"query\": \"query\",\r\n    \"limit\": 10,    \r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/filters",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"filters"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Filters Stats - Retrieves basic filter availability info",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{token}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "unleash-account",
-						"value": "user@domain.so",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/filters/stats",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"filters",
-						"stats"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Search - Searches for resources using a full-text search",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{token}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "unleash-account",
-						"value": "user@domain.so",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"assistantId\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\r\n    \"query\": \"go links\",    \r\n    \"contentSearch\": false,\r\n    \"semanticSearch\": false,\r\n    \"sort\": {\r\n        \"by\": \"relevancy|alphabetical|recency\"\r\n    },\r\n    \"paging\": {\r\n        \"nextToken\": \"{token}\",\r\n        \"size\": 10\r\n    },\r\n    \"filters\": {\r\n        \"AppId\": [\"github\"]\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/search",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"search"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Tokens - Generate Custom User Token",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"token\": \"{token}\",\r\n    \"embedId\": \"{id}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://e-api.unleash.so/tokens",
-					"protocol": "https",
-					"host": [
-						"e-api",
-						"unleash",
-						"so"
-					],
-					"path": [
-						"tokens"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Unleash Search API",
+    "version": "v1",
+    "description": "The Unleash Search API is a JSON-based API that enables searching across various data sources integrated with Unleash. <br> It allows embedding search functionality into external websites while ensuring secure and scoped data access. <br> Access to the API requires an API key provided by an Unleash representative. <br> The key is scoped to specific data sources and filters to ensure only relevant data is exposed. It must be included in API requests for authentication. <br> The API supports searching across predefined data sources connected to Unleash, returning results in JSON format for easy integration into applications. <br>\n",
+    "termsOfService": "https://www.unleash.so/terms",
+    "contact": {
+      "email": "support@unleash.so"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://e-api.unleash.so/"
+    }
+  ],
+  "paths": {
+    "/answers": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Answers"
+        ],
+        "summary": "Answer questions",
+        "description": "Will answer the question provided in the Query parameter and respond with the list of references.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UnleashAccountHeader"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requests.AskRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requests.AskRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Requests.AskRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses.AskResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses.AskResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Responses.AskResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chats": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Chat with assistant",
+        "description": "Chat with any assistant",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UnleashAccountHeader"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatCompletionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatCompletionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatCompletionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatCompletionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatCompletionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatCompletionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/filters": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Search using pre-defined filters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UnleashAccountHeader"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterOptionsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterOptionsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FilterOptionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterOptionsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterOptionsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterOptionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/filters/stats": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Filters"
+        ],
+        "summary": "Retrieves basic filter availability info",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UnleashAccountHeader"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetFilterStatsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetFilterStatsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetFilterStatsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterStatsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterStatsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilterStatsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search for resources",
+        "description": "Search for resources using a query and filters",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UnleashAccountHeader"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens": {
+      "post": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Create session token for user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionTokenRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionTokenRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionTokenResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionTokenResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionTokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Enter the token with the `Bearer: ` prefix, e.g. \"Bearer abcde12345\"."
+      }
+    },
+    "parameters": {
+      "UnleashAccountHeader": {
+        "schema": {
+          "title": "Impersontaed user email"
+        },
+        "name": "unleash-account",
+        "in": "header",
+        "required": false,
+        "description": "Email address of the user to impersonate. This header allows the caller to perform actions on behalf of the specified user."
+      }
+    },
+    "schemas": {
+      "ChatCompletionRequest": {
+        "required": [
+          "messages"
+        ],
+        "type": "object",
+        "properties": {
+          "messages": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessageRequest"
+            }
+          },
+          "assistantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "enterpriseSearch": {
+            "$ref": "#/components/schemas/ChatEnterpriseSearchRequest"
+          },
+          "stream": {
+            "type": "boolean"
+          },
+          "threadId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatCompletionResponse": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ChatResponseEventType"
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "$ref": "#/components/schemas/ChatMessageResponse"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            },
+            "nullable": true
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reference"
+            },
+            "nullable": true
+          },
+          "threadId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatEnterpriseSearchRequest": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/SearchFilters"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatMessageRequest": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/MessageRole"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatMessageResponse": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "$ref": "#/components/schemas/MessageRole"
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IChatMessagePart"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatResponseEventType": {
+        "enum": [
+          "Request",
+          "Resources",
+          "Message",
+          "References",
+          "Progress",
+          "Full"
+        ],
+        "type": "string"
+      },
+      "FilterOption": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterOptionsRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "assistantId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterOptionsResponse": {
+        "type": "object",
+        "properties": {
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilterOption"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilterStatsResponse": {
+        "type": "object",
+        "properties": {
+          "availableFilters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetFilterStatsRequest": {
+        "type": "object",
+        "properties": {
+          "assistantId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IChatMessagePart": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/MessagePartType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MessagePartType": {
+        "enum": [
+          "Text",
+          "InlineReference"
+        ],
+        "type": "string"
+      },
+      "MessageRole": {
+        "enum": [
+          "User",
+          "System",
+          "Assistant"
+        ],
+        "type": "string"
+      },
+      "Reference": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Requests.AskRequest": {
+        "required": [
+          "query"
+        ],
+        "type": "object",
+        "properties": {
+          "query": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/SearchFilters"
+          },
+          "assistantId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Resource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "appId": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalId": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "object",
+            "additionalProperties": {},
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Responses.AnswerReference": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "$ref": "#/components/schemas/Resource"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Responses.AskResponse": {
+        "type": "object",
+        "properties": {
+          "answer": {
+            "type": "string",
+            "nullable": true
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Responses.AnswerReference"
+            },
+            "nullable": true
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchFilters": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "isStarred": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasAttachments": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "rsvp": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "appId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "type": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "label": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "anyLabel": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "sentTo": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "sentFrom": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "reporter": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "assignedTo": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "reviewer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "fromTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "untilTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "createBeforeTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "createAfterTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBeforeTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedAfterTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "dueBeforeTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "dueAfterTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "class": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "sharedBy": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "sharedWith": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "linkId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "eventTimeFrameStart": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventTimeFrameEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "cycle": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "extension": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "jobTitle": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "location": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "department": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "managedBy": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "isManager": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "topic": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "hasLinks": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "mentioned": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "pathPrefix": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "fileTypeGroup": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "relatedContacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "recentActivityFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "workingOn": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "SearchPagingRequest": {
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchPagingResponse": {
+        "type": "object",
+        "properties": {
+          "next": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchRequest": {
+        "type": "object",
+        "properties": {
+          "assistantId": {
+            "type": "string",
+            "nullable": true
+          },
+          "filters": {
+            "$ref": "#/components/schemas/SearchFilters"
+          },
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "contentSearch": {
+            "type": "boolean"
+          },
+          "semanticSearch": {
+            "type": "boolean"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SearchSortRequest"
+          },
+          "paging": {
+            "$ref": "#/components/schemas/SearchPagingRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchResponse": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchResponseItem"
+            },
+            "nullable": true
+          },
+          "paging": {
+            "$ref": "#/components/schemas/SearchPagingResponse"
+          },
+          "requestId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchResponseItem": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "$ref": "#/components/schemas/Resource"
+          },
+          "snippet": {
+            "type": "string",
+            "nullable": true
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchSortRequest": {
+        "type": "object",
+        "properties": {
+          "by": {
+            "$ref": "#/components/schemas/SortCriteriaRequest"
+          },
+          "order": {
+            "$ref": "#/components/schemas/SortOrderRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionTokenRequest": {
+        "required": [
+          "embedId",
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "embedId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionTokenResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SortCriteriaRequest": {
+        "enum": [
+          "Relevancy",
+          "Alphabetical",
+          "Recency"
+        ],
+        "type": "string"
+      },
+      "SortOrderRequest": {
+        "enum": [
+          "Ascending",
+          "Descending"
+        ],
+        "type": "string",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    }
+  }
 }
