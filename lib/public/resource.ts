@@ -5,4 +5,7 @@ export interface Resource {
 	externalId: string;
 	name: string;
 	data: any;
+    title: string;
+    subtitle: string;
+    url: string;
 }
