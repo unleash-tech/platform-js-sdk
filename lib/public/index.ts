@@ -24,6 +24,6 @@ export * from './search-result';
 export * from './search-sort-by';
 export * from './search-sort-order';
 export * from './search-sort';
-export * from './resources-client'
-export * from './resource-client'
-export * from './resource-content-response'
+export * from './resources-client';
+export * from './resource-client';
+export * from './resource-content-response';

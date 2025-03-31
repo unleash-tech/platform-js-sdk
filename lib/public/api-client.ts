@@ -58,7 +58,7 @@ export class ApiClient {
 		return new AssistantsClientImp(this.http);
 	}
 
-    get resources(): ResourcesClient {
+	get resources(): ResourcesClient {
 		return new ResourcesClientImp(this.http);
 	}
 
