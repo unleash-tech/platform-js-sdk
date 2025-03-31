@@ -785,7 +785,19 @@
             "type": "object",
             "additionalProperties": {},
             "nullable": true
-          }
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "subtitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
         },
         "additionalProperties": false
       },
@@ -1199,6 +1211,18 @@
             "items": {
               "type": "string"
             },
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "subtitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
             "nullable": true
           }
         },
