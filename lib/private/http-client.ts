@@ -4,6 +4,7 @@ import { Readable } from 'stream';
 export interface HttpClient {
 	post<Request, Response>(url: string, body: Request): Promise<Response>;
 	streamFetch<Request>(url: string, body: Request): AsyncGenerator<string, void, unknown>;
+	get<Response>(url: string): Promise<Response>;
 }
 
 export class AxiosHttpClient implements HttpClient {
@@ -11,6 +12,11 @@ export class AxiosHttpClient implements HttpClient {
 
 	async post<Request, Response>(url: string, body: Request): Promise<Response> {
 		const resp = await this._axios.post(url, body);
+		return resp.data;
+	}
+
+	async get<Response>(url: string): Promise<Response> {
+		const resp = await this._axios.get(url);
 		return resp.data;
 	}
 

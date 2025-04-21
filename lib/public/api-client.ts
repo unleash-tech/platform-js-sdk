@@ -1,9 +1,9 @@
 import { ApiClientOptions } from './api-client-options';
 import * as axios from 'axios';
-import { ApiError } from '../public';
+import { ApiError, ResourcesClient } from '../public';
 import { AssistantsClient } from './assistants-client';
 import { AssistantsClientImp } from '../private/assistants-client';
-import { AxiosHttpClient, HttpClient } from '../private';
+import { AxiosHttpClient, HttpClient, ResourcesClientImp } from '../private';
 
 const DEFAULT_TENANT = 'https://app.unleash.so';
 
@@ -56,6 +56,10 @@ export class ApiClient {
 
 	get assistants(): AssistantsClient {
 		return new AssistantsClientImp(this.http);
+	}
+
+	get resources(): ResourcesClient {
+		return new ResourcesClientImp(this.http);
 	}
 
 	private http: HttpClient;
