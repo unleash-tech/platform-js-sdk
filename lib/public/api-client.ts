@@ -18,7 +18,7 @@ export class ApiClient {
 			const url = new URL(options.tenant || DEFAULT_TENANT);
 			const host = url.hostname;
 
-			if (host.endsWith('unleash.team') || host === 'app.unleash.so') {
+			if (host.endsWith('.unleash.team') || host === 'app.unleash.so') {
 				url.hostname = `e-api.${host}`;
 			} else {
 				url.pathname = url.pathname.replace(/\/?$/, '/e-api');
