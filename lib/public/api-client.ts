@@ -14,8 +14,18 @@ export class ApiClient {
 			...(options.axios || {}),
 		});
 
-		if (!_axios.defaults.baseURL)
-			_axios.defaults.baseURL = (options.tenant || DEFAULT_TENANT)?.replace('https://app.', 'https://e-api.');
+		if (!_axios.defaults.baseURL) {
+			const url = new URL(options.tenant || DEFAULT_TENANT);
+			const host = url.hostname;
+
+			if (host.endsWith('.unleash.team') || host === 'app.unleash.so') {
+				url.hostname = `e-api.${host}`;
+			} else {
+				url.pathname = url.pathname.replace(/\/?$/, '/e-api');
+			}
+
+			_axios.defaults.baseURL = url.toString();
+		}
 
 		if (options.token) _axios.defaults.headers.common.Authorization = 'Bearer ' + options.token;
 
