@@ -19,7 +19,7 @@ export class ApiClient {
 			const host = url.hostname;
 
 			if (host.endsWith('.unleash.team') || host === 'app.unleash.so') {
-				url.hostname = `e-api.${host}`;
+				url.hostname = `e-api.${host.replace('app.', '')}`;
 			} else {
 				url.pathname = url.pathname.replace(/\/?$/, '/e-api');
 			}
